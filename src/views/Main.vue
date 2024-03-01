@@ -1,5 +1,8 @@
 <template>
   <div>
+    <h1>Connect with Spotify</h1>
+    <button @click="authorizeWithSpotify">Connect</button>
+
     <h1>Button</h1>
     <div v-if="allAlbums.length > 0 && !loading">
       <button @click="getRandomEpisode">Click me!</button>
@@ -22,6 +25,8 @@
 </template>
 
 <script>
+import { generateCodeVerifierAndChallenge } from '@/utils'
+
 export default {
   data() {
     return {
@@ -34,6 +39,23 @@ export default {
     this.fetchAllAlbums()
   },
   methods: {
+    async authorizeWithSpotify() {
+      const { codeVerifier, codeChallenge } = await generateCodeVerifierAndChallenge()
+
+      window.localStorage.setItem('code_verifier', codeVerifier)
+
+      const authUrl = new URL('https://accounts.spotify.com/authorize')
+      const params = {
+        response_type: 'code',
+        client_id: import.meta.env.VITE_SPOTIFY_CLIENT_ID,
+        code_challenge_method: 'S256',
+        code_challenge: codeChallenge,
+        redirect_uri: import.meta.env.VITE_SPOTIFY_REDIRECT_URI,
+      }
+
+      authUrl.search = new URLSearchParams(params).toString()
+      window.location.href = authUrl.toString()
+    },
     async fetchAllAlbums() {
       try {
         this.loading = true
@@ -43,7 +65,7 @@ export default {
           spotify_api_endpoint,
           {
             headers: {
-              Authorization: `Bearer ${process.env.SPOTIFY_API_KEY}`
+              Authorization: `Bearer ${window.localStorage.getItem('acces_token')}`
             }
           }
         )
@@ -63,7 +85,7 @@ export default {
               `${spotify_api_endpoint}&offset=${offset * 50}`,
               {
                 headers: {
-                  Authorization: `Bearer ${process.env.SPOTIFY_API_KEY}`
+                  Authorization: `Bearer ${window.localStorage.getItem('acces_token')}`
                 }
               }
             ).then(response => response.json())
