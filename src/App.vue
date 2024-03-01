@@ -22,8 +22,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   data() {
     return {
@@ -40,7 +38,7 @@ export default {
       try {
         this.loading = true
 
-        const initialResponse = await axios.get(
+        const initialResponse = await fetch(
           'https://api.spotify.com/v1/artists/3meJIgRw7YleJrmbpbJK6S/albums?include_groups=album&limit=1',
           {
             headers: {
@@ -48,20 +46,21 @@ export default {
             }
           }
         )
-        const totalAlbums = initialResponse.data.total
+        const initialData = await initialResponse.json()
+        const totalAlbums = initialData.total
 
         const numberOfRequests = Math.ceil(totalAlbums / 50)
         for (let offset = 0; offset < numberOfRequests; offset++) {
-          const response = await axios.get(
+          const response = await fetch(
             `https://api.spotify.com/v1/artists/3meJIgRw7YleJrmbpbJK6S/albums?include_groups=album&limit=50&offset=${offset * 50}`,
             {
               headers: {
                 Authorization: `Bearer ${process.env.SPOTIFY_API_KEY}`
               }
             }
-          )
+          ).then(res => res.json())
 
-          this.allAlbums = [...this.allAlbums, ...response.data.items]
+          this.allAlbums = [...this.allAlbums, ...response.items]
         }
       } catch (error) {
         console.error(error)
