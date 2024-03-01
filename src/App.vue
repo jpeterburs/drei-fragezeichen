@@ -38,8 +38,9 @@ export default {
       try {
         this.loading = true
 
+        const spotify_api_endpoint = 'https://api.spotify.com/v1/artists/3meJIgRw7YleJrmbpbJK6S/albums?include_groups=album&limit=50'
         const initialResponse = await fetch(
-          'https://api.spotify.com/v1/artists/3meJIgRw7YleJrmbpbJK6S/albums?include_groups=album&limit=1',
+          spotify_api_endpoint,
           {
             headers: {
               Authorization: `Bearer ${process.env.SPOTIFY_API_KEY}`
@@ -52,7 +53,7 @@ export default {
         const numberOfRequests = Math.ceil(totalAlbums / 50)
         for (let offset = 0; offset < numberOfRequests; offset++) {
           const response = await fetch(
-            `https://api.spotify.com/v1/artists/3meJIgRw7YleJrmbpbJK6S/albums?include_groups=album&limit=50&offset=${offset * 50}`,
+            `${spotify_api_endpoint}&offset=${offset * 50}`,
             {
               headers: {
                 Authorization: `Bearer ${process.env.SPOTIFY_API_KEY}`
