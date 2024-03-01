@@ -50,18 +50,31 @@ export default {
         const initialData = await initialResponse.json()
         const totalAlbums = initialData.total
 
-        const numberOfRequests = Math.ceil(totalAlbums / 50)
-        for (let offset = 0; offset < numberOfRequests; offset++) {
-          const response = await fetch(
-            `${spotify_api_endpoint}&offset=${offset * 50}`,
-            {
-              headers: {
-                Authorization: `Bearer ${process.env.SPOTIFY_API_KEY}`
-              }
-            }
-          ).then(res => res.json())
+        if (totalAlbums <= 50) {
+          this.allAlbums = initialData.items
+        }
+        else {
+          const numberOfRequests = Math.ceil(totalAlbums / 50)
 
-          this.allAlbums = [...this.allAlbums, ...response.items]
+          const promises = Array.from({ length: numberOfRequests - 1 }, (_, index) => {
+            const offset = index + 1
+
+            return fetch(
+              `${spotify_api_endpoint}&offset=${offset * 50}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${process.env.SPOTIFY_API_KEY}`
+                }
+              }
+            ).then(response => response.json())
+          })
+
+          const responses = await Promise.all(promises)
+
+          this.allAlbums = [
+            ...initialData.items,
+            ...responses.reduce((albums, response) => [...albums, ...response.items], [])
+          ]
         }
       }
       catch (error) {
