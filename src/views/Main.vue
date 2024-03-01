@@ -1,11 +1,9 @@
 <template>
   <div>
-    <h1>Connect with Spotify</h1>
-    <button @click="authorizeWithSpotify">Connect</button>
+    <button @click="authorizeWithSpotify">Connect with Spotify</button>
 
-    <h1>Button</h1>
     <div v-if="allAlbums.length > 0 && !loading">
-      <button @click="getRandomEpisode">Click me!</button>
+      <button @click="getRandomEpisode">Random Episode!</button>
     </div>
 
     <div v-if="selectedAlbum">
@@ -59,6 +57,8 @@ export default {
     async fetchAllAlbums() {
       try {
         this.loading = true
+
+        if (!window.localStorage.getItem('acces_token')) return
 
         const spotify_api_endpoint = 'https://api.spotify.com/v1/artists/3meJIgRw7YleJrmbpbJK6S/albums?include_groups=album&limit=50'
         const initialResponse = await fetch(
