@@ -63,9 +63,11 @@ export default {
 
           this.allAlbums = [...this.allAlbums, ...response.items]
         }
-      } catch (error) {
+      }
+      catch (error) {
         console.error(error)
-      } finally {
+      }
+      finally {
         this.loading = false
       }
     },
