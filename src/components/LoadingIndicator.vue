@@ -20,8 +20,8 @@ export default {
 }
 
 .indicator {
-  border: 0.5rem solid #e9e9e9;
-  border-top: 0.5rem solid lightskyblue;
+  border: 0.5rem solid var(--background);
+  border-top: 0.5rem solid var(--primary);
   border-radius: 50%;
   width: 5rem;
   height: 5rem;

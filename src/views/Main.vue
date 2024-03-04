@@ -147,12 +147,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  --spotify-green: #1DB954;
-  --spotify-white: #FFFFFF;
-  --spotify-black: #191414;
-}
-
 #main {
   display: flex;
   align-items: center;
@@ -175,14 +169,18 @@ h1, h2 {
 }
 
 .button-container .spacer {
-  margin-right: 25%;
+  margin-right: 5rem;
 }
 
-#play, #skip {
-  stroke: var(--spotify-black);
+#play {
+  stroke: var(--primary);
+}
+
+#skip {
+  stroke: var(--secondary)
 }
 
 #play:hover, #skip:hover {
-  stroke: var(--spotify-green);
+  filter: opacity(75%);
 }
 </style>
