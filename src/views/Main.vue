@@ -50,9 +50,19 @@ export default {
   },
   mounted() {
     if (!this.connectedWithSpotify) this.conectWithSpotify()
+    this.checkTokenValidity()
     this.fetchAllAlbums()
   },
   methods: {
+    async checkTokenValidity() {
+      const expirationTime = window.localStorage.getItem('token_expiration')
+
+      if (expirationTime && Date.now() + 5 * 60 * 1000 < expirationTime) {
+        return
+      }
+
+      await this.conectWithSpotify()
+    },
     async conectWithSpotify() {
       const { codeVerifier, codeChallenge } = await generateCodeVerifierAndChallenge()
 

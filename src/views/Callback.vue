@@ -27,7 +27,11 @@ export default {
         }
       ).then(res => res.json())
 
-      localStorage.setItem('acces_token', response.access_token)
+      const expirationTime = Date.now() + response.expires_in * 1000
+
+      localStorage.setItem('access_token', response.access_token)
+      localStorage.setItem('token_expiration', expirationTime)
+
       window.location.href = '/'
     }
   }
