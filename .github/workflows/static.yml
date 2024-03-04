@@ -29,6 +29,7 @@ jobs:
 
       - name: Install dependencies and build
         env:
+          VITE_GITHUB_ACTION: ${{ env.GITHUB_ACTION }}
           VITE_SPOTIFY_CLIENT_ID: ${{ secrets.VITE_SPOTIFY_CLIENT_ID }}
           VITE_SPOTIFY_REDIRECT_URI: ${{ vars.VITE_SPOTIFY_REDIRECT_URI }}
         run: |
