@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? '/drei-fragezeichen/' : '/'
+  publicPath: process.env.GITHUB_ACTION ? '/drei-fragezeichen/' : '/'
 }

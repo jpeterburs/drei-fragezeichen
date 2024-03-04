@@ -29,7 +29,6 @@ jobs:
 
       - name: Install dependencies and build
         env:
-          NODE_ENV: production
           VITE_SPOTIFY_CLIENT_ID: ${{ secrets.VITE_SPOTIFY_CLIENT_ID }}
           VITE_SPOTIFY_REDIRECT_URI: ${{ env.VITE_SPOTIFY_REDIRECT_URI }}
         run: |
