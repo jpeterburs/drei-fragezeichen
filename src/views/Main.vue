@@ -1,9 +1,8 @@
 <template>
   <div id="main">
-    <div v-if="loading">
-      <div class="spinner"></div>
-    </div>
-    <div v-else>
+    <LoadingIndicator :loading="loading" />
+
+    <div v-if="!loading">
       <div v-if="selectedAlbum">
         <img :src="selectedAlbum.images[0].url" />
 
@@ -34,9 +33,13 @@
 </template>
 
 <script>
+import LoadingIndicator from '@/components/LoadingIndicator.vue'
 import { generateCodeVerifierAndChallenge } from '@/utils'
 
 export default {
+  components: {
+    LoadingIndicator
+  },
   data() {
     return {
       allAlbums: [],
@@ -181,20 +184,5 @@ h1, h2 {
 
 #play:hover, #skip:hover {
   stroke: var(--spotify-green);
-}
-
-
-/* TODO: Move to component */
-.spinner {
-  border: 4px solid var(--spotify-black);
-  border-top: 4px solid var(--spotify-green);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-}
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
 }
 </style>
