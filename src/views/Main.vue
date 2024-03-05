@@ -203,6 +203,6 @@ p {
 
 #choose-another {
   margin-top: 1rem;
-  color: gray
+  color: #A3A3A3
 }
 </style>
