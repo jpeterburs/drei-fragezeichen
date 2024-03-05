@@ -6,26 +6,18 @@
       <div v-if="selectedAlbum">
         <img :src="selectedAlbum.images[0].url" />
 
-        <h1 class="truncate">{{ selectedAlbum.name }}</h1>
-        <h2>{{ selectedAlbum.total_tracks }} Kaptiel - {{ new Date(selectedAlbum.release_date).toLocaleDateString('de-DE', { year: 'numeric', month: '2-digit', day: '2-digit' }) }}</h2>
+        <p id="album-name" class="truncate"><a :href="selectedAlbum.external_urls.spotify" target="spotify">{{ selectedAlbum.name }}</a></p>
+        <p id="album-metadata">{{ selectedAlbum.total_tracks }} Kaptiel &#8210; {{ new Date(selectedAlbum.release_date).toLocaleDateString('de-DE', { year: 'numeric', month: '2-digit', day: '2-digit' }) }}</p>
 
-        <div class="button-container">
-          <button id="play" @click="playSelectedAlbum()">
-            <svg width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M16.6582 9.28638C18.098 10.1862 18.8178 10.6361 19.0647 11.2122C19.2803 11.7152 19.2803 12.2847 19.0647 12.7878C18.8178 13.3638 18.098 13.8137 16.6582 14.7136L9.896 18.94C8.29805 19.9387 7.49907 20.4381 6.83973 20.385C6.26501 20.3388 5.73818 20.0469 5.3944 19.584C5 19.053 5 18.1108 5 16.2264V7.77357C5 5.88919 5 4.94701 5.3944 4.41598C5.73818 3.9531 6.26501 3.66111 6.83973 3.6149C7.49907 3.5619 8.29805 4.06126 9.896 5.05998L16.6582 9.28638Z" stroke-width="2" stroke-linejoin="round"/>
-            </svg>
+        <div class="actions">
+          <button id="play-on-spotify" @click="playSelectedAlbum()">
+            <img src="@/assets/Spotify_Icon_RGB_White.svg" />
+            AUF SPOTIFY ABSPIELEN
           </button>
 
-          <div class="spacer"></div>
-
-          <button id="skip" @click="getRandomEpisode()">
-            <svg width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4.06189 13C4.02104 12.6724 4 12.3387 4 12C4 7.58172 7.58172 4 12 4C14.5006 4 16.7332 5.14727 18.2002 6.94416M19.9381 11C19.979 11.3276 20 11.6613 20 12C20 16.4183 16.4183 20 12 20C9.61061 20 7.46589 18.9525 6 17.2916M9 17H6V17.2916M18.2002 4V6.94416M18.2002 6.94416V6.99993L15.2002 7M6 20V17.2916" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </div>
-        <div class="button-container">
-          <button id="feeling-lucky" class="btn" @click="feelingLucky()">Auf gut Glück!</button>
+          <a id="choose-another" @click="getRandomEpisode()" href="javascript:void(0)">
+            Eine andere Episode auswählen
+          </a>
         </div>
       </div>
     </div>
@@ -135,20 +127,17 @@ export default {
       }
     },
     async playSelectedAlbum() {
-      window.location.href = this.selectedAlbum.uri
+      try {
+        window.location.href = this.selectedAlbum.uri
+      }
+      catch {
+        window.location.href = this.selectedAlbum.external_urls.spotify
+      }
     },
     async getRandomEpisode() {
       this.loading = true
 
       this.selectedAlbum = this.allAlbums[Math.floor(Math.random() * this.allAlbums.length)]
-
-      this.loading = false
-    },
-    async feelingLucky() {
-      this.loading = true
-
-      this.getRandomEpisode()
-      this.playSelectedAlbum()
 
       this.loading = false
     }
@@ -165,32 +154,55 @@ export default {
   margin-top: 5vh;
 }
 
-h1, h2 {
+p {
   text-align: center;
 }
 
-.button-container {
+#album-name {
+  font-size: 2.2rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+#album-name a {
+  text-decoration: none;
+  color: var(--spotify-green);
+}
+
+#album-metadata {
+  font-size: 1.2rem;
+  color: var(--spotify-white);
+  margin-top: 0;
+  margin-bottom: 2.5rem;
+}
+
+.actions {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  margin-top: 1vh;
-  margin-bottom: 1vh;
+  flex-direction: column;
 }
 
-.button-container .spacer {
-  margin-right: 5rem;
+#play-on-spotify {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--spotify-green);
+  color: var(--spotify-white);
+  font-size: 1.5rem;
+  padding-left: 1rem;
+  padding-right: 2rem;
+  border-radius: 5rem;
 }
 
-#play {
-  stroke: var(--primary);
+#play-on-spotify img {
+  min-height: 21px;
+  height: 2rem;
+  margin: 1rem;
 }
 
-#skip {
-  stroke: var(--secondary)
-}
-
-#play:hover, #skip:hover {
-  filter: opacity(75%);
+#choose-another {
+  margin-top: 1rem;
+  color: gray
 }
 </style>

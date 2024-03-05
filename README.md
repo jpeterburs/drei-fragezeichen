@@ -27,7 +27,3 @@ npm run dev
 ```sh
 npm run build
 ```
-
-## Credit
-
-Vectors and icons by [SVG Repo](https://www.svgrepo.com)

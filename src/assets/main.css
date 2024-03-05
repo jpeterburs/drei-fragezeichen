@@ -1,39 +1,26 @@
 * {
-  --text: #090f12;
-  --background: #fafcfd;
-  --primary: #4f9bc0;
-  --secondary: #93c6df;
-  --accent: #5fb0d9;
-  --font-family: Arial, Helvetica, Calibri, Verdana;
+  --spotify-green: #1DB954;
+  --spotify-white: #FFFFFF;
+  --spotify-black: #191414;
+
+  --font-family: sans-serif, 'Helvetica Neue', Helvetica, Arial;
 }
 
 body {
   font-family: var(--font-family);
   margin: 0;
-  background-color: var(--background);
-  color: var(--text);
+  background-color: var(--spotify-black);
+  color: var(--spotify-white);
 }
 
 button {
-  font-family: var(--font-family);
-}
-
-button:not(.btn) {
   border: none;
   background: none;
   cursor: pointer;
   margin: 0;
   padding: 0;
+  font-family: var(--font-family);
 }
-
-.btn {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border: none;
-  cursor: pointer;
-  color: var(--text);
-}
-
 
 .truncate {
   max-width: 640px;
