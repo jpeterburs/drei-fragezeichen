@@ -32,7 +32,7 @@ export default {
       localStorage.setItem('access_token', response.access_token)
       localStorage.setItem('token_expiration', expirationTime)
 
-      window.location.href = '/'
+      this.$router.push('/')
     }
   }
 }
