@@ -3,16 +3,14 @@ import Callback from '../views/Callback.vue'
 import Main from '../views/Main.vue'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/drei-fragezeichen/'),
   routes: [
     {
       path: '/',
-      name: 'main',
       component: Main
     },
     {
       path: '/callback',
-      name: 'callback',
       component: Callback
     }
   ]
