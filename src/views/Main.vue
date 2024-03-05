@@ -7,7 +7,7 @@
         <img :src="selectedAlbum.images[0].url" />
 
         <p id="album-name" class="truncate"><a :href="selectedAlbum.external_urls.spotify" target="spotify">{{ selectedAlbum.name }}</a></p>
-        <p id="album-metadata">{{ selectedAlbum.total_tracks }} Kaptiel &#8210; {{ new Date(selectedAlbum.release_date).toLocaleDateString('de-DE', { year: 'numeric', month: '2-digit', day: '2-digit' }) }}</p>
+        <p id="album-metadata">{{ selectedAlbum.total_tracks }} Kaptiel &bull; {{ formatReleaseDate() }}</p>
 
         <div class="actions">
           <button id="play-on-spotify" @click="playSelectedAlbum()">
@@ -125,6 +125,26 @@ export default {
       finally {
         this.loading = false
       }
+    },
+    formatReleaseDate() {
+      const releaseDate = new Date(this.selectedAlbum.release_date)
+      const releaseDatePrecision = this.selectedAlbum.release_date_precision
+
+      let formatOptions = { year: 'numeric' };
+
+      switch (releaseDatePrecision) {
+        case 'month':
+          formatOptions.month = '2-digit'
+          break
+        case 'day':
+          formatOptions.month = '2-digit'
+          formatOptions.day = '2-digit'
+          break
+        default:
+          break
+      }
+
+      return releaseDate.toLocaleDateString('de-DE', formatOptions)
     },
     async playSelectedAlbum() {
       try {
