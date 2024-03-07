@@ -7,7 +7,7 @@
         <img :src="selectedAlbum.images[0].url" />
 
         <p id="album-name" class="truncate"><a :href="selectedAlbum.external_urls.spotify" target="spotify">{{ selectedAlbum.name }}</a></p>
-        <p id="album-metadata">{{ selectedAlbum.total_tracks }} Kaptiel &bull; {{ formatReleaseDate() }}</p>
+        <p id="album-metadata">{{ selectedAlbum.total_tracks }} Kapitel &bull; {{ formatReleaseDate() }}</p>
 
         <div class="actions">
           <button id="play-on-spotify" @click="playSelectedAlbum()">
