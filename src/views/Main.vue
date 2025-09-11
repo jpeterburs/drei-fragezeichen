@@ -4,7 +4,7 @@
 
     <div v-if="!loading">
       <div v-if="selectedAlbum">
-        <img :src="selectedAlbum.images[0].url" />
+        <img id="album-cover" :src="selectedAlbum.images[0].url" />
 
         <p id="album-name" class="truncate"><a :href="selectedAlbum.external_urls.spotify" target="spotify">{{ selectedAlbum.name }}</a></p>
         <p id="album-metadata">{{ selectedAlbum.total_tracks }} Kapitel &bull; {{ formatReleaseDate() }}</p>
@@ -178,6 +178,10 @@ p {
   text-align: center;
 }
 
+#album-cover {
+  border-radius: 4px;
+}
+
 #album-name {
   font-size: 2.2rem;
   margin-top: 0.25rem;
@@ -224,5 +228,11 @@ p {
 #choose-another {
   margin-top: 1rem;
   color: #A3A3A3
+}
+
+@media (max-width: 600px) {
+  #album-cover {
+    border-radius: 2px;
+  }
 }
 </style>
