@@ -37,4 +37,10 @@ export default {
   right: 1rem;
   top: 1rem;
 }
+
+@media (max-width: 600px) {
+  #logout {
+    font-size: 1rem;
+  }
+}
 </style>

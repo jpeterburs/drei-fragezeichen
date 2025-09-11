@@ -231,8 +231,37 @@ p {
 }
 
 @media (max-width: 600px) {
+  #main {
+    margin-top: 7vh;
+  }
+
   #album-cover {
+    max-width: 90%;
+    margin: auto 5%;
     border-radius: 2px;
+  }
+
+  #album-name {
+    font-size: 1rem;
+  }
+
+  #album-metadata {
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  #play-on-spotify {
+    font-size: 0.75rem;
+  }
+
+  #play-on-spotify img {
+    height: 1rem;
+    margin: 0.5rem;
+  }
+
+  #choose-another {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
   }
 }
 </style>
