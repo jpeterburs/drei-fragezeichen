@@ -1,7 +1,7 @@
 {
 	"name": "Die drei Fragezeichen | Zufällige Folge",
 	"short_name": "???",
-	"start_url": ".",
+	"start_url": "/drei-fragezeichen/",
 	"display": "standalone",
 	"background_color": "#191414",
 	"description": "Auswahl einer zufälligen 'Die drei ???'-Episode",
